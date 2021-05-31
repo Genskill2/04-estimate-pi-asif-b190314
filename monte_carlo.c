@@ -41,3 +41,20 @@ int main(void) {
 
 
 
+float mc_pi(int n)
+{
+float x,y,z,a,b=0,c;
+for(int i=1;i<=n;i++)
+{
+x=frandom();
+y=frandom();
+z=(x*x+y*y);
+if (z<1)
+{
+b=b+1;
+}
+}
+c=4*b/n;
+return c;
+}
+
