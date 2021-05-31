@@ -3,58 +3,33 @@
 #include <stdio.h>
 #include <math.h>
 
-float mc_pi(int);
-
-float frandom() {
-  long int q = random();
-  float ret = (float)q/(float)RAND_MAX;
-  return ret;
-}
+float wallis_pi(int x);
 
 int main(void) {
-  float pi0;
-  float pi1;
-  
-  pi0 = mc_pi(25000);
-  pi1 = mc_pi(25000);
-  printf("%f %f\n", pi0, pi1);
-  
-  if (pi0 == pi1) {
-      printf("Two separate estimates of pi are exactly the same. This is unlikely.\n");
+  float pi;
+  for (int i=0; i<5; i++) {
+    pi = wallis_pi(i);
+    if (!(fabs(pi - M_PI) > 0.15)) {
+      printf("Estimate with just %d iterations is %f which is too accurate.\n", i, pi);
       abort();
     }
-
-  if (fabs(pi0 - pi1) > 0.05) {
-      printf("Two separate estimates %f and %f are too different.\n", pi0, pi1);
-      abort();
   }
 
-    
-  for (int i=2000; i<5000; i++) {
-    pi0 = mc_pi(i);
-    if (!(fabs(pi0 - M_PI) < 0.4)) {
-      printf("Estimate with even %d iterations is %f which is not accurate enough.\n", i, pi0);
+  for (int i=500; i<3000; i++) {
+    pi = wallis_pi(i);
+    if (!(fabs(pi - M_PI) < 0.01)) {
+      printf("Estimate with even %d iterations is %f which is not accurate enough.\n", i, pi);
       abort();
     }
   }
 }
 
-
-
-float mc_pi(int n)
+float wallis_pi(int x)
 {
-float x,y,z,a,b=0,c;
-for(int i=1;i<=n;i++)
+float y=0.00;
+for(int k=1;k<=x;k++)
 {
-x=frandom();
-y=frandom();
-z=(x*x+y*y);
-if (z<1)
-{
-b=b+1;
+y=y+(4*x*x)/((4*x*x)-1);
 }
+return y;
 }
-c=4*b/n;
-return c;
-}
-
