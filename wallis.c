@@ -26,10 +26,10 @@ int main(void) {
 
 float wallis_pi(int x)
 {
-float y=0.00;
+float y=1.00;
 for(int k=1;k<=x;k++)
 {
-y=y+(4*x*x)/((4*x*x)-1);
+y=2*(y*(4*x*x)/((4*x*x)-1));
 }
 return y;
 }
